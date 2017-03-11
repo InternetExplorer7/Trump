@@ -9,23 +9,35 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  Image,
+  TextInput
 } from 'react-native';
 
 export default class Trump extends Component {
+  constructor(){
+    super();
+    this.state = {
+      text: ''
+    };
+  }
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Trump's travel ban app.
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.ios.js
+          Enter your information to get started.
         </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <TextInput
+          style={{height: 40, borderColor: 'blue', borderWidth: 1}}
+          onChangeText = {(text) => {
+            this.setState({text})
+          }}
+          value={this.state.text}
+          >
+        </TextInput>
       </View>
     );
   }
@@ -41,13 +53,17 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 30,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover', // or 'stretch'
+  }
 });
 
 AppRegistry.registerComponent('Trump', () => Trump);
