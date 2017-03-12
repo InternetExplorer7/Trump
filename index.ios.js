@@ -58,10 +58,7 @@ class Form extends Component {
           scrollEventThrottle={200}
           style={styles.scrollView}>
           {this.state.messages.map((v, i) => {
-            if (v.isAi) {
-              return <MessageInput key={i} value={v.message}/>
-            }
-            return <MessageInput key={i} value={v.message}/>
+            return <MessageInput key={i} isAi={v.isAi} value={v.message}/>
           })}
         </ScrollView>
         <TouchableOpacity
@@ -180,13 +177,16 @@ class MessageInput extends Component {
     super(props);
     this.state = {
       value: props.value,
-      index: props.index
+      index: props.index,
+      isAi: props.isAi
     }
   }
   render() {
-    return (
-      <Text>{this.state.value}</Text>
-    )
+    if(this.state.isAi) {
+      return <Text style={styles.ai}>{this.state.value}</Text>
+    } else {
+      return <Text style={styles.human}>{this.state.value}</Text>
+    }
   }
 }
 
@@ -199,9 +199,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: .4,
     backgroundColor: 'whitesmoke',
     width: '100%',
-    height: '20%',
-    width: '100%',
     height: '20%'
+  },
+  ai: {
+    backgroundColor: 'green',
+    color: 'blue',
+    width: '100%'
+  }, human: {
+    backgroundColor: 'red',
+    color: 'white',
+    width: '100%'
   },
   container: {
     flex: 1,
