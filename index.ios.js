@@ -121,9 +121,24 @@ class Form extends Component {
     })
       .then(response => { return response.json() })
       .then(response => {
-        const message = response.text[0];
+        // alert('response: ' + response.output.text[0]);
+        // nationalities_array: [String] <response.context>
+        // visa: String <response.context>
+        const nationalities_array = response.context.nationalities_array;
+        const visa = response.context.visa;
+        const message = response.output.text[0];
         messages.push({isAi: false, message: this.state.text.trim()})
         messages.push({isAi: true, message: message})
+        if (message.indexOf('tabulate') > -1) {
+          // Reached the end.
+          if (visa) {
+            if(visa.toLowerCase().trim() === 'h1b') {
+              messages.push({isAi: true, message: "You're on a H1-B Visa -- which is going to be suspended soon. Your warning level is high for re-entering the U.S. if you leave."})
+            } else if (visa.toLowerCase().trim() === 'b1' || visa.toLowerCase().trim() === 'b2') {
+              messages.push({isAi: true, message: "You're on a recreational business purposes visa -- which is still okay to have. Your warning level is very low to none for re-entering the U.S. if you leave."})
+            }
+          }
+        }
         this.setState({
           messages: messages,
           text: ''
