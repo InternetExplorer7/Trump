@@ -77,7 +77,7 @@ class Form extends Component {
         }}
         value = {this.state.text}/>
         <Button
-          onPress={this.sendText}
+          onPress={this.sendText.bind(this)}
           title="Send."
           color="#841584"
         />
@@ -86,7 +86,12 @@ class Form extends Component {
   }
 
   sendText(){
-
+    var messagesCopy = this.state.messages;
+    messagesCopy.push(this.state.text);
+    this.setState({
+      messages: messagesCopy,
+      text: ''
+    })
   }
 }
 
