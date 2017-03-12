@@ -25,11 +25,12 @@ export default class Trump extends Component {
       text: ''
     };
   }
+
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.title}>
         <Text style={styles.welcome}>
-          Trump's travel ban app.
+          Can I return to America?
         </Text>
         <Form/>
         <KeyboardSpacer/>
@@ -42,8 +43,8 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [{isAi: false, message:'Yo'}, {isAi: false, message:'Okay'}],
-      text: 'placeholder.'
+      messages: [],
+      text: ''
     }
   }
 
@@ -74,18 +75,36 @@ class Form extends Component {
           <Text>Scroll to bottom</Text>
         </TouchableOpacity>
         <TextInput
+        placeholder="Type to talk to Watson"
         style = {{height: 40, borderColor: 'gray', borderWidth: 1}}
         onChangeText = {text => {
           this.setState({text})
         }}
         value = {this.state.text}/>
-        <Button
-          onPress={this.sendText.bind(this)}
-          title="Send."
-          color="#841584"
-        />
-      </View>
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            onPress={this.sendText.bind(this)}
+            title="Send"
+            color="olivedrab"
+          />
+          <Button
+              onPress={this.reset.bind(this)}
+            title="Restart"
+            color="olivedrab"
+          />
+          </View>
+        </View>
     )
+  }
+
+  reset(){
+    var messagesCopy = this.state.messages;
+    fetch("https://hackuvic-kavehkhorram.c9users.io/eraseContext", {method : "post"});
+    messagesCopy.length = 0;
+    this.setState({
+      messages: messagesCopy,
+      text: ''
+    })
   }
 
   sendText(){
@@ -124,7 +143,6 @@ class MessageInput extends Component {
       index: props.index
     }
   }
-  
   render() {
     return (
       <Text>{this.state.value}</Text>
@@ -132,11 +150,16 @@ class MessageInput extends Component {
   }
 }
 
+
 setMessage = (v, i) => {<Text key={i}>{v}</Text>}
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: '#6A85B1',
+    borderBottomColor: 'black',
+    borderBottomWidth: .4,
+    backgroundColor: 'whitesmoke',
+    width: '100%',
+    height: '20%',
     width: '100%',
     height: '20%'
   },
@@ -147,9 +170,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    color: 'white',
+    fontFamily: "Trebuchet MS",
+    fontWeight: "100",
     textAlign: 'center',
-    margin: 30,
+    marginTop: 20,
+    fontSize: 15,
+    textAlign: 'center',
+    margin: 10,
+
   },
   instructions: {
     textAlign: 'center',
@@ -159,6 +188,23 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover', // or 'stretch'
+
+  },
+  title: {
+    flex: 1,
+    height:5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'olivedrab',
+    shadowColor: 'black',
+    shadowOffset: {width: 50, height: 50},
+    shadowOpacity:50,
+    shadowRadius: 50
+  },
+  buttonBottom: {
+    flex:1,
+    flexDirection:'column',
+    backgroundColor: 'olivedrab'
   }
 });
 

@@ -9,6 +9,10 @@
   "dependencies": {
     "react": "15.4.2",
     "react-native": "0.42.0",
+<<<<<<< HEAD
+    "react-native-gifted-messenger": "^0.1.4",
+=======
+>>>>>>> bcdda3e47ef2346e1f14b543cf9403ab805c8a23
     "react-native-keyboard-spacer": "^0.3.1"
   },
   "devDependencies": {
