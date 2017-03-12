@@ -42,7 +42,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: ['Yo', 'Okay'],
+      messages: [{isAi: false, message:'Yo'}, {isAi: false, message:'Okay'}],
       text: 'placeholder.'
     }
   }
@@ -57,7 +57,10 @@ class Form extends Component {
           scrollEventThrottle={200}
           style={styles.scrollView}>
           {this.state.messages.map((v, i) => {
-            return <MessageInput key={i} value={v}/>
+            if (v.isAi) {
+              return <MessageInput key={i} value={v.message}/>
+            }
+            return <MessageInput key={i} value={v.message}/>
           })}
         </ScrollView>
         <TouchableOpacity
@@ -86,14 +89,32 @@ class Form extends Component {
   }
 
   sendText(){
-    var messagesCopy = this.state.messages;
-    messagesCopy.push(this.state.text);
-    this.setState({
-      messages: messagesCopy,
-      text: ''
+      var messages = this.state.messages;
+      fetch('https://hackuvic-kavehkhorram.c9users.io/fetch/watson', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input: this.state.text.trim()
+      })
     })
-  }
-}
+      .then(response => { return response.json() })
+      .then(response => {
+        const message = response.text[0];
+        messages.push({isAi: false, message: this.state.text.trim()})
+        messages.push({isAi: true, message: message})
+        this.setState({
+          messages: messages,
+          text: ''
+        })
+      })
+      .catch(e => {
+        console.log('e: ' + e);
+      })
+  } // sendText
+} // class
 
 class MessageInput extends Component {
   constructor(props) {
