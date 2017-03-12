@@ -58,10 +58,7 @@ class Form extends Component {
           scrollEventThrottle={200}
           style={styles.scrollView}>
           {this.state.messages.map((v, i) => {
-            if (v.isAi) {
-              return <MessageInput key={i} value={v.message}/>
-            }
-            return <MessageInput key={i} value={v.message}/>
+            return <MessageInput key={i} isAi={v.isAi} value={v.message}/>
           })}
         </ScrollView>
         <TouchableOpacity
@@ -131,13 +128,29 @@ class Form extends Component {
         messages.push({isAi: true, message: message})
         if (message.indexOf('tabulate') > -1) {
           // Reached the end.
+          alert('visa: ' + visa + '; na: ' + nationalities_array.length);
           if (visa && nationalities_array.length > 0) {
-            if(visa.toLowerCase().trim() === 'h1b') {
-              messages.push({isAi: true, message: "You're on a H1-B Visa -- which is going to be suspended soon. Your warning level is high for re-entering the U.S. if you leave."})
+            if(visa === 'H1-B' && (nationalities_array.includes('Syria') || nationalities_array.includes('Iran'))) {
+              messages.push({isAi: true, message: "You're on a H1-B Visa and with citizenship from a banned country -- your H1-B is going to be banned soon. Your warning level is high for re-entering the U.S. if you leave."})
               // Add some facts here.
-            } else if (visa.toLowerCase().trim() === 'b1' || visa.toLowerCase().trim() === 'b2') {
-              messages.push({isAi: true, message: "You're on a recreational business purposes visa -- which is still okay to have. Your warning level is very low to none for re-entering the U.S. if you leave."})
+            } else if ((visa === 'B-1' || visa === 'B-2') && (nationalities_array.includes('Iran') || nationalities_array.includes('Syria'))) {
+              messages.push({isAi: true, message: "You're on a recreational business purposes visa from a banned country -- which is risky for you to leave. Your warning level is medium for re-entering the U.S. if you leave."})
+            } else {
+              messages.push({isAi: true, message: "You're fine! You're able to travel without having to worry about being able to come back!"})
             }
+          } else if (visa) {
+            // Just Visa
+            if (visa === 'H1-B') {
+              messages.push({isAi: true, message: "You're on a H1-B Visa -- your H1-B is going to be banned soon. Your warning level is medium-high for re-entering the U.S. if you leave."});
+            } else if ((visa === 'B-1' || visa === 'B-2')) {
+              messages.push({isAi: true, message: "You're on a recreational business purposes visa -- which is currently OKAY to have. Your warning level is low for re-entering hte U.S. if you leave."})
+            }
+          } else if (nationalities_array.length > 0) {
+            nationalities_array.forEach((v, i) => {
+              if (BANNED_COUNTRIES.has(v)) {
+                messages.push({isAi: true, message: "You're a citizen of one of the banned countries, " + v + ". This is very high risk and you should not consider leaving the United States right now."})
+              }
+            })
           }
         }
         this.setState({
@@ -152,25 +165,28 @@ class Form extends Component {
 } // class
 
 var BANNED_COUNTRIES = new Set();
-set.add('Libya');
-set.add('Sudan');
-set.add('Syria');
-set.add('Iran');
-set.add('Yemen');
-set.add('Somalia');
+BANNED_COUNTRIES.add('Libya');
+BANNED_COUNTRIES.add('Sudan');
+BANNED_COUNTRIES.add('Syria');
+BANNED_COUNTRIES.add('Iran');
+BANNED_COUNTRIES.add('Yemen');
+BANNED_COUNTRIES.add('Somalia');
 
 class MessageInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
-      index: props.index
+      index: props.index,
+      isAi: props.isAi
     }
   }
   render() {
-    return (
-      <Text>{this.state.value}</Text>
-    )
+    if(this.state.isAi) {
+      return <Text style={styles.ai}>{this.state.value}</Text>
+    } else {
+      return <Text style={styles.human}>{this.state.value}</Text>
+    }
   }
 }
 
@@ -183,9 +199,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: .4,
     backgroundColor: 'whitesmoke',
     width: '100%',
-    height: '20%',
-    width: '100%',
     height: '20%'
+  },
+  ai: {
+    backgroundColor: 'green',
+    color: 'blue',
+    width: '100%'
+  }, human: {
+    backgroundColor: 'red',
+    color: 'white',
+    width: '100%'
   },
   container: {
     flex: 1,
