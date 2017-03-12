@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
   AppRegistry,
   StyleSheet,
@@ -13,7 +14,8 @@ import {
   Image,
   TextInput,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from 'react-native';
 
 export default class Trump extends Component {
@@ -29,10 +31,8 @@ export default class Trump extends Component {
         <Text style={styles.welcome}>
           Trump's travel ban app.
         </Text>
-        <Text style={styles.welcome}>
-          Enter your information to get started.
-        </Text>
         <Form/>
+        <KeyboardSpacer/>
       </View>
     );
   }
@@ -76,8 +76,17 @@ class Form extends Component {
           this.setState({text})
         }}
         value = {this.state.text}/>
+        <Button
+          onPress={this.sendText}
+          title="Send."
+          color="#841584"
+        />
       </View>
     )
+  }
+
+  sendText(){
+
   }
 }
 
