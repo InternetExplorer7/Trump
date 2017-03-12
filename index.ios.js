@@ -89,6 +89,7 @@ class Form extends Component {
   }
 
   sendText(){
+      var messages = this.state.messages;
       fetch('https://hackuvic-kavehkhorram.c9users.io/fetch/watson', {
       method: 'POST',
       headers: {
@@ -96,12 +97,21 @@ class Form extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        input: this.state.text
+        input: this.state.text.trim()
       })
     })
       .then(response => { return response.json() })
       .then(response => {
-        const messages = response.message;
+        const message = response.text[0];
+        messages.push({isAi: false, message: this.state.text.trim()})
+        messages.push({isAi: true, message: message})
+        this.setState({
+          messages: messages,
+          text: ''
+        })
+      })
+      .catch(e => {
+        console.log('e: ' + e);
       })
   } // sendText
 } // class
