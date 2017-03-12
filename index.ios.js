@@ -131,9 +131,10 @@ class Form extends Component {
         messages.push({isAi: true, message: message})
         if (message.indexOf('tabulate') > -1) {
           // Reached the end.
-          if (visa) {
+          if (visa && nationalities_array.length > 0) {
             if(visa.toLowerCase().trim() === 'h1b') {
               messages.push({isAi: true, message: "You're on a H1-B Visa -- which is going to be suspended soon. Your warning level is high for re-entering the U.S. if you leave."})
+              // Add some facts here.
             } else if (visa.toLowerCase().trim() === 'b1' || visa.toLowerCase().trim() === 'b2') {
               messages.push({isAi: true, message: "You're on a recreational business purposes visa -- which is still okay to have. Your warning level is very low to none for re-entering the U.S. if you leave."})
             }
@@ -149,6 +150,14 @@ class Form extends Component {
       })
   } // sendText
 } // class
+
+var BANNED_COUNTRIES = new Set();
+set.add('Libya');
+set.add('Sudan');
+set.add('Syria');
+set.add('Iran');
+set.add('Yemen');
+set.add('Somalia');
 
 class MessageInput extends Component {
   constructor(props) {
