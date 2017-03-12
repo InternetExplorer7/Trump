@@ -1,0 +1,35 @@
+1.
+If user is citizen of Iran, Libya, Somalia, Sudan, Syria or Yemen,
+show this snippet:
+
+The new US President imposed a controversial 90-day ban on travellers from seven countries - Iran, Iraq, Libya, Somalia, Sudan, Syria and Yemen - in January. 
+
+But after the ban was lifted by the courts, Mr Trump issued a new ban that removed Iraq from the list of countries affected by the travel ban. 
+
+Why is Donald Trump banning travel from these countries? 
+
+Donald Trump has said that the affected countries were identified by Barack Obama’s administration as “sources of terror”. 
+
+He said: “To be clear, this is not a Muslim ban, as the media is falsely reporting. This is not about religion — this is about terror and keeping our country safe.” 
+
+Source: http://www.express.co.uk/news/world/761087/Donald-Trump-immigration-ban-what-seven-countries-reasons-US-banning-Muslim-travellers
+
+2.
+If user is a dual citizen but none of the citizenship is from the list of affected countries, show this snippet:
+
+Dual Nationals and Diplomats
+
+The ban still does not apply to U.S. citizens, or to dual nationals who enter the United States presenting their passport from a country not under the ban. During the rollout of the original order, it was unclear whether dual nationals from the targeted countries were allowed.
+
+Source: https://www.nytimes.com/interactive/2017/03/06/us/politics/trump-travel-ban-groups.html
+
+3.
+If user has one of the valid F, M or J visas, show this snippet:
+
+Visitors, Students and Workers Without Current Visas
+
+The new ban only applies to people from the six countries without current visas, like temporary, non-immigrant visas for students and workers. Students with valid F, M or J visas will be allowed. The original ban also affected current visa holders who would normally be allowed to travel and re-enter the country.
+
+During the rollout of the first ban, many visa holders were stuck abroad or detained in American airports. Later, a State Department official said that “fewer than 60,000” visas had been provisionally revoked. Several judges who issued injunctions against the original order raised concerns that due process rights were being violated.
+
+Source: https://www.nytimes.com/interactive/2017/03/06/us/politics/trump-travel-ban-groups.html
