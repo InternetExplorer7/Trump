@@ -132,7 +132,9 @@ class Form extends Component {
           if (visa && nationalities_array.length > 0) {
             if(visa === 'H1-B' && (nationalities_array.includes('Syria') || nationalities_array.includes('Iran'))) {
               messages.push({isAi: true, message: "You're on a H1-B Visa and with citizenship from a banned country -- your H1-B is going to be banned soon. Your warning level is high for re-entering the U.S. if you leave."})
-              // Add some facts here.
+              messages.push({isAi: true, message: 'Relevant case one: The new US President imposed a controversial 90-day ban on travellers from seven countries - Iran, Iraq, Libya, Somalia, Sudan, Syria and Yemen - in January. '})
+              messages.push({isAi: true, message: 'Relevant case two: But after the ban was lifted by the courts, Mr Trump issued a new ban that removed Iraq from the list of countries affected by the travel ban.'})
+              messages.push({isAi: true, message: 'Relevant case three: Donald Trump has said that the affected countries were identified by Barack Obama’s administration as “sources of terror”.'})
             } else if ((visa === 'B-1' || visa === 'B-2') && (nationalities_array.includes('Iran') || nationalities_array.includes('Syria'))) {
               messages.push({isAi: true, message: "You're on a recreational business purposes visa from a banned country -- which is risky for you to leave. Your warning level is medium for re-entering the U.S. if you leave."})
             } else {
@@ -144,11 +146,16 @@ class Form extends Component {
               messages.push({isAi: true, message: "You're on a H1-B Visa -- your H1-B is going to be banned soon. Your warning level is medium-high for re-entering the U.S. if you leave."});
             } else if ((visa === 'B-1' || visa === 'B-2')) {
               messages.push({isAi: true, message: "You're on a recreational business purposes visa -- which is currently OKAY to have. Your warning level is low for re-entering hte U.S. if you leave."})
+              messages.push({isAi: true, message: "The new ban only applies to people from the six countries without current visas, like temporary, non-immigrant visas for students and workers. Students with valid F, M or J visas will be allowed. The original ban also affected current visa holders who would normally be allowed to travel and re-enter the country."});
+              messages.push({isAi: true, message: "During the rollout of the first ban, many visa holders were stuck abroad or detained in American airports. Later, a State Department official said that “fewer than 60,000” visas had been provisionally revoked. Several judges who issued injunctions against the original order raised concerns that due process rights were being violated."});
             }
           } else if (nationalities_array.length > 0) {
             nationalities_array.forEach((v, i) => {
               if (BANNED_COUNTRIES.has(v)) {
                 messages.push({isAi: true, message: "You're a citizen of one of the banned countries, " + v + ". This is very high risk and you should not consider leaving the United States right now."})
+                messages.push({isAi: true, message: 'Relevant case one: The new US President imposed a controversial 90-day ban on travellers from seven countries - Iran, Iraq, Libya, Somalia, Sudan, Syria and Yemen - in January. '})
+                messages.push({isAi: true, message: 'Relevant case two: Donald Trump has said that the affected countries were identified by Barack Obama’s administration as “sources of terror”.'})
+                messages.push({isAi: true, message: 'Please contact a volunteer from the ACLU as soon as possible at 206.624.2180'})
               }
             })
           }
@@ -202,13 +209,17 @@ const styles = StyleSheet.create({
     height: '20%'
   },
   ai: {
-    backgroundColor: 'green',
-    color: 'blue',
-    width: '100%'
-  }, human: {
-    backgroundColor: 'red',
+    backgroundColor: 'darkseagreen',
     color: 'white',
-    width: '100%'
+    width: '100%',
+    fontSize: 32,
+    textAlign: 'right'
+  }, human: {
+    backgroundColor: 'lavender',
+    color: 'black',
+    width: '100%',
+    fontSize: 32,
+    textAlign: 'left'
   },
   container: {
     flex: 1,
